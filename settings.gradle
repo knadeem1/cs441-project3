@@ -1,2 +1,1 @@
-include ':app'
-rootProject.name='cs441_project_3'
+include 'android', 'core'
