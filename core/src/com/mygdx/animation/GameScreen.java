@@ -10,11 +10,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class GameScreen implements Screen {
 	private OrthographicCamera camera;
@@ -31,7 +36,6 @@ public class GameScreen implements Screen {
 	private Texture cookieImg;
 	private Texture bombImg;
 	private Texture monsterImg;
-
 
 	private Rectangle monster;
 	private Array<Rectangle> cookies;
@@ -115,6 +119,7 @@ public class GameScreen implements Screen {
 		game.batch.draw(cloudImg,cloud.x,cloud.y);
 		game.batch.draw(monsterImg, monster.x, monster.y);
 		game.batch.draw(grassImg,grass.x,grass.y);
+
 		game.font.setColor(Color.WHITE);
 		game.font.draw(game.batch, "TOTAL: " + total, 50, 475);
 		game.font.setColor(Color.YELLOW);
@@ -165,53 +170,60 @@ public class GameScreen implements Screen {
 			if (TimeUtils.nanoTime() - timebomb > 2000000000) constructBomb();
 		}
 		if(level == 4){
-			if (TimeUtils.nanoTime() - timebomb > 2000000000) constructBomb();
+			if (TimeUtils.nanoTime() - timebomb > 1000000000) constructBomb();
 		}
-		if(level == 5){
+		if(level >= 5){
 			if (TimeUtils.nanoTime() - time > 1000000000) constructCookie();
-
 		}
 
 		//to iterate over all cookies in array
 		//if reached a certain total, a new level is achieved
 		Iterator<Rectangle> i = cookies.iterator();
+
 		while (i.hasNext()) {
 			Rectangle cookie = i.next();
 			cookie.y -= speed * Gdx.graphics.getDeltaTime();
+
 			if (cookie.overlaps(monster)) {
 				total++;
 				crunchSound.play();
 				i.remove();
+
 				if(total == tracker){
 					level++;
-					speed += 8;
+					speed += 10;
 					tracker += 10;
 				}
 			}
-			if(level != 5) {
-				if (cookie.y + 64 < 0) i.remove();
+
+			if(cookie.y + 64 < 0 && level < 5) {
+				i.remove();
 			}
-			if(level == 5){
-				if (cookie.y + 64 < 0){
-					i.remove();
-					penalty = penalty + " X";
-					if(penalty.equals(" X X X")){
-						game.setScreen(new MainMenuScreen(game, total));
-						dispose();
+
+			if(cookie.y + 64 < 0 && level >= 5){
+				i.remove();
+				penalty = penalty + " X";
+
+				if(penalty.equals(" X X X")) {
+					game.setScreen(new MainMenuScreen(game, total));
+					dispose();
 				}
 			}
 		}
 
 		if(level >= 1) {
 			Iterator<Rectangle> j = bombs.iterator();
+
 			while (j.hasNext()) {
 				Rectangle bomb = j.next();
 				bomb.y -= speed * Gdx.graphics.getDeltaTime();
+
 				if (bomb.overlaps(monster)) {
 					penalty = penalty + " X";
 					explosion.play();
 					j.remove();
 					speed -= 8;
+
 					if(penalty.equals(" X X X")){
 						//game.font.draw(game.batch, "High Score: " + total, 100, 50);
 						game.setScreen(new MainMenuScreen(game, total));
@@ -219,10 +231,28 @@ public class GameScreen implements Screen {
 						dispose();
 					}
 				}
-				if (bomb.y + 64 < 0) j.remove();
+				if(bomb.y + 64 < 0 && level != 4) {
+					j.remove();
+				}
+
+				if(bomb.y + 64 < 0 && level == 4){
+					j.remove();
+					total++;
+					speed += 2;
+
+					if(total == tracker) {
+						level++;
+						speed += 10;
+						tracker += 10;
+					}
+				}
+
 			}
 		}
+
+
 	}
+
 
 	@Override
 	public void resize(int width, int height) {
@@ -230,8 +260,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		// start the playback of the background music
-		// when the screen is shown
 		music.play();
 	}
 
