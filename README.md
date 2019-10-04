@@ -1,10 +1,10 @@
 # CS 441 Project3
 ## <ins>COOKIE MONSTER GAME</ins>
 
-### <ins>DESCRIPTION</ins>
+### <ins>DESCRIPTION:</ins>
 This simple game consists of two screens: Main Menu and Game screens. The game begins with the main menu screen which displays the 'START' button and the accumulated 'HIGH SCORE'. Clicking on the screen will change to the 'Game' screen, which consists of a cookie monster at the bottom of the screen and animated 'Cookie' and 'Bomb' objects falling vertically. The objective of the game is to feed the cookie monster as many cookies as possible while avoiding the bombs.
 
-### <ins>HOW TO PLAY</ins>: 
+### <ins>HOW TO PLAY:</ins> 
 Upgrade level every ten points coolected. ***Every three penalties results in game over***. Levels 0-1 are easy, levels 2-3 are medium, while levels 4-5 are considered hard. Read the levels' description below:
 
 Points are gained by collecting cookies and avoiding bombs. No points are lost if a cookie is missed. ***Penalty is given if a bomb is collected***:
