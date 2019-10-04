@@ -7,7 +7,7 @@ This simple game consists of two screens: Main Menu and Game screens. The game b
 ### <ins>HOW TO PLAY:</ins> 
 Upgrade level every ten points coolected. ***Every three penalties results in game over***. Levels 0-1 are easy, levels 2-3 are medium, while levels 4-5 are considered hard. Read the levels' description below:
 
-Points are gained by collecting cookies and avoiding bombs. No points are lost if a cookie is missed. ***Penalty is given if a bomb is collected***:
+***Points are gained by collecting cookies and avoiding bombs. No points are lost if a cookie is missed. Penalty is given if a bomb is collected***:
 
 ---**Level 0** (pts. 0-10): Cookies falling vertically at a slow pace.
 
@@ -17,11 +17,11 @@ Points are gained by collecting cookies and avoiding bombs. No points are lost i
 
 ---**Level 3** (pts. 31-40): Cookies and bombs falling vertically at a high speed.
 
-Points are gained by avoiding bombs. No points are lost if a bomb is collected. ***Penalty is given if a bomb is collected***:
+***Points are gained by avoiding bombs. No points are lost if a bomb is collected. Penalty is given if a bomb is collected***:
 
 ---**Level 4** (pts. 41-50): Only an increased amount of bombs falling vertically at a high speed.
 
-Points are gained by collecting cookies. No points are lost if a cookie is missed. ***Penalty is given if a cookie is missed***:
+***Points are gained by collecting cookies. No points are lost if a cookie is missed. Penalty is given if a cookie is missed***:
 
 ---**Level >5** (pts. 51- ): Only an increased amount of cookies falling vertically at a high speed. 
 
