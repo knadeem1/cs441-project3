@@ -1,7 +1,7 @@
 # CS 441 Project3
 ## COOKIE MONSTER GAME
 
-### DESCRIPTION
+### **DESCRIPTION**
 This simple game consists of two screens: Main Menu and Game screens. The game begins with the main menu screen which displays the 'START' button and the accumulated 'HIGH SCORE'. Clicking on the screen will change to the 'Game' screen, which consists of a cookie monster at the bottom of the screen and animated 'Cookie' and 'Bomb' objects falling vertically. The objective of the game is to feed the cookie monster as many cookies as possible while avoiding the bombs.
 
 ### HOW TO PLAY: 
