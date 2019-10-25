@@ -2,6 +2,7 @@ package com.mygdx.animation;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -55,41 +57,63 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false, 800,480);
         backgroundImg = new Texture(Gdx.files.internal("icon.png"));
         startImg = new Texture(Gdx.files.internal("start.png"));
-        */
+
         file1 = Gdx.files.local("scores1.txt");
 
         file2 = Gdx.files.local("scores2.txt");
 
         file3 = Gdx.files.local("scores3.txt");
+        */
+        Preferences prefs = Gdx.app.getPreferences("game preferences");
 
-        if(player == 1){
-            if(file1.exists()) {
-                try {
-                    //reads the first line of the file and reads it as an integer
-                    highScore1 = Integer.parseInt(file1.readString());
-                    file1.writeString(String.valueOf(score), false);
-                    if (score > highScore1) {
-                        highScore1 = score;
-                    }
-                    file1.writeString(String.valueOf(highScore1), false);
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore1 = 0;
-                }
-            }
+        if(player == 0){
+            highScore1 = prefs.getInteger("highScore1");
+            highScore2 = prefs.getInteger("highScore2");
+            highScore3 = prefs.getInteger("highScore3");
         }
 
-        loadScore(score);
+        if(player == 1){
+            if (score >highScore1) {
+                prefs.putInteger("highScore1", score);
+                prefs.flush();
+            }
+            highScore1 = prefs.getInteger("highScore1");
+            highScore2 = prefs.getInteger("highScore2");
+            highScore3 = prefs.getInteger("highScore3");
+        }
+
+        if(player == 2){
+            if (score >highScore2) {
+                prefs.putInteger("highScore2", score);
+                prefs.flush();
+            }
+            highScore1 = prefs.getInteger("highScore1");
+            highScore2 = prefs.getInteger("highScore2");
+            highScore3 = prefs.getInteger("highScore3");
+        }
+        if(player == 3){
+            if (score >highScore3) {
+                prefs.putInteger("highScore3", score);
+                prefs.flush();
+            }
+            highScore1 = prefs.getInteger("highScore1");
+            highScore2 = prefs.getInteger("highScore2");
+            highScore3 = prefs.getInteger("highScore3");
+        }
 
 
-        p1 = "Player1";
-        p2 = "Player2";
-        p3 = "Player3";
 
-        max = highScore1;
-        max2 = highScore2;
-        max3 = highScore3;
-     /*
+        //loadScore(score);
+
+
+        p1 = "";
+        p2 = "";
+        p3 = "";
+
+        max = 0;
+        max2 = 0;
+        max3 = 0;
+
         if(highScore1>=highScore3&&highScore1>=highScore2){
             max = highScore1;
             p1 = "Player1";
@@ -146,7 +170,6 @@ public class MainMenuScreen implements Screen {
         }
 
 
- */
         /*if(score == 0)highScore = score;
         else{
             loadScore(score, player);
@@ -172,7 +195,7 @@ public class MainMenuScreen implements Screen {
     public void show() {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         /*tableContainer = new Container<>();
 
@@ -198,69 +221,90 @@ public class MainMenuScreen implements Screen {
 
         Label topLabel = new Label("COOKIE MONSTER", skin);
         topLabel.setAlignment(Align.center);
-        topLabel.setFontScale(6);
+        topLabel.setFontScale(7);
+        topLabel.setColor(Color.TEAL);
 
         Label nameLabel = new Label("Name:", skin);
         nameLabel.setFontScale(4);
 
         TextField nameText = new TextField("",skin);
 
-        TextButton p1Button = new TextButton("Player1",skin);
-        TextButton p2Button = new TextButton("Player2",skin);
-        TextButton p3Button = new TextButton("Player3",skin);
 
-        Label scoreLabel = new Label("LeaderBoard", skin);
+        TextButton p1Button = new TextButton("Player1",skin);
+        p1Button.getLabel().setFontScale(4.5f);
+        p1Button.setColor(Color.ORANGE);
+        TextButton p2Button = new TextButton("Player2",skin);
+        p2Button.getLabel().setFontScale(4.5f);
+        p2Button.setColor(Color.ORANGE);
+        TextButton p3Button = new TextButton("Player3",skin);
+        p3Button.getLabel().setFontScale(4.5f);
+        p3Button.setColor(Color.ORANGE);
+
+        Label scoreLabel = new Label("LEADERBOARD", skin);
         scoreLabel.setAlignment(Align.center);
-        scoreLabel.setFontScale(3.5f);
+        scoreLabel.setFontScale(4.5f);
+        scoreLabel.setColor(Color.OLIVE);
 
         Label rankLabel = new Label("Rank", skin);
         rankLabel.setAlignment(Align.center);
-        rankLabel.setFontScale(2.5f);
+        rankLabel.setFontScale(3f);
+        rankLabel.setColor(Color.GOLDENROD);
 
         Label playerLabel = new Label("Name", skin);
         playerLabel.setAlignment(Align.center);
-        playerLabel.setFontScale(2.5f);
+        playerLabel.setFontScale(3f);
+        playerLabel.setColor(Color.GOLDENROD);
 
         Label dataLabel = new Label("Points", skin);
         dataLabel.setAlignment(Align.center);
-        dataLabel.setFontScale(2.5f);
+        dataLabel.setFontScale(3f);
+        dataLabel.setColor(Color.GOLDENROD);
 
         Label rank1 = new Label("1", skin);
         rank1.setAlignment(Align.center);
-        rank1.setFontScale(2);
+        rank1.setFontScale(2.5f);
+        rank1.setColor(Color.GOLD);
 
         Label rank2 = new Label("2", skin);
         rank2.setAlignment(Align.center);
-        rank2.setFontScale(2);
+        rank2.setFontScale(2.5f);
+        rank2.setColor(Color.GOLD);
 
         Label rank3 = new Label("3", skin);
         rank3.setAlignment(Align.center);
-        rank3.setFontScale(2);
+        rank3.setFontScale(2.5f);
+        rank3.setColor(Color.GOLD);
 
         //have to get the name from name field
         Label player1 = new Label(p1, skin);
         player1.setAlignment(Align.center);
-        player1.setFontScale(2);
+        player1.setFontScale(2.5f);
+        player1.setColor(Color.GOLD);
 
         Label player2 = new Label(p2, skin);
         player2.setAlignment(Align.center);
-        player2.setFontScale(2);
+        player2.setFontScale(2.5f);
+        player2.setColor(Color.GOLD);
 
         Label player3 = new Label(p3, skin);
         player3.setAlignment(Align.center);
-        player3.setFontScale(2);
+        player3.setFontScale(2.5f);
+        player3.setColor(Color.GOLD);
 
         Label score1 = new Label(String.valueOf(max), skin);
         score1.setAlignment(Align.center);
-        score1.setFontScale(2);
+        score1.setFontScale(2.5f);
+        score1.setColor(Color.GOLD);
 
         Label score2 = new Label(String.valueOf(max2), skin);
         score2.setAlignment(Align.center);
-        score2.setFontScale(2);
+        score2.setFontScale(2.5f);
+        score2.setColor(Color.GOLD);
 
         Label score3 = new Label(String.valueOf(max3), skin);
         score3.setAlignment(Align.center);
-        score3.setFontScale(2);
+        score3.setFontScale(2.5f);
+        score3.setColor(Color.GOLD);
 
         //checkBoxA.setTransform(true);
         //checkBoxA.scaleBy(2f);
@@ -269,9 +313,9 @@ public class MainMenuScreen implements Screen {
         table.add(topLabel).expandY();
 
         table.row();
-        table.add(p1Button).size(300,100).uniform();
-        table.add(p2Button).size(300,100).uniform();
-        table.add(p3Button).size(300,100).uniform();
+        table.add(p1Button).size(350,150).uniform();
+        table.add(p2Button).size(350,150).uniform();
+        table.add(p3Button).size(350,150).uniform();
 
         table.row().colspan(3).fillX();
         table.add(scoreLabel).expandY().bottom();
@@ -367,7 +411,7 @@ public class MainMenuScreen implements Screen {
         }
          */
     }
-
+/*
     //*******NOT WORKING*******************
     public void loadScore(int score){
 
@@ -510,7 +554,7 @@ public class MainMenuScreen implements Screen {
         }
     }
 
-
+*/
     @Override
     public void resize(int width, int height) {
         //stage.getViewport().update(width, height);
