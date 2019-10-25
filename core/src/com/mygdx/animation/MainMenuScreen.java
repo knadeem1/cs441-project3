@@ -56,7 +56,7 @@ public class MainMenuScreen implements Screen {
         file2 = Gdx.files.local("scores2.txt");
         file3 = Gdx.files.local("scores3.txt");
 
-        //loadScore(score, player);
+        loadScore(score, player);
 
         /*if(score == 0)highScore = score;
         else{
@@ -100,9 +100,9 @@ public class MainMenuScreen implements Screen {
         String p1 = "Player1";
         String p2 = "Player2";
         String p3 = "Player3";
-        int max = 0;
-        int max2 = 0;
-        int max3 = 0;
+        int max = highScore1;
+        int max2 = highScore2;
+        int max3 = highScore3;
         /*if(highScore1>=highScore3&&highScore1>=highScore2){
             max = highScore1;
             p1 = "Player1";
@@ -176,8 +176,11 @@ public class MainMenuScreen implements Screen {
         TextField nameText = new TextField("",skin);
 
         TextButton p1Button = new TextButton("Player1",skin);
+        p1Button.scaleBy(7f);
         TextButton p2Button = new TextButton("Player2",skin);
+        p2Button.scaleBy(7f);
         TextButton p3Button = new TextButton("Player3",skin);
+        p3Button.scaleBy(7f);
 
         Label scoreLabel = new Label("LeaderBoard", skin);
         scoreLabel.setAlignment(Align.center);
@@ -342,77 +345,140 @@ public class MainMenuScreen implements Screen {
             //scores don't change, only read from file and loaded into variables
             for(int i=1;i<4;i++){
                 if(i==1){
-                    highScore1 = Integer.parseInt(file1.readString());
+                    if(file1.exists()) {
+                        try {
+                            highScore1 = Integer.parseInt(file1.readString());
+                        } catch (NumberFormatException e) {
+                            //if there was no high score found, set it to 0
+                            highScore1 = 4;
+                        }
+                    }
                 }
                 if(i==2){
-                    highScore2 = Integer.parseInt(file2.readString());
+                    if(file2.exists()) {
+                        try {
+                            highScore2 = Integer.parseInt(file2.readString());
+                        } catch (NumberFormatException e) {
+                            //if there was no high score found, set it to 0
+                            highScore2 = 5;
+                        }
+                    }
                 }
                 if(i==3){
-                    highScore3 = Integer.parseInt(file3.readString());
+                    if(file3.exists()) {
+                        try {
+                            highScore3 = Integer.parseInt(file3.readString());
+                        } catch (NumberFormatException e) {
+                            //if there was no high score found, set it to 0
+                            highScore3 = 6;
+                        }
+                    }
                 }
             }
         }
-        else{
-            //if returned a score for a player from GameScreen()
-            //figure out what player was playing
-            //determine if the high core for that player changed
-            //read and load scores from all players
-            if(player==1){
-                if(file1.exists()) {
-                    try {
-                        //reads the first line of the file and reads it as an integer
-                        highScore1 = Integer.parseInt(file1.readString());
-                        file1.writeString(String.valueOf(score), false);
-                        if (score > highScore1) {
-                            highScore1 = score;
-                        }
-                        file1.writeString(String.valueOf(highScore1), false);
-                    } catch (NumberFormatException e) {
-                        //if there was no high score found, set it to 0
-                        highScore1 = 0;
+
+        //if returned a score for a player from GameScreen()
+        //figure out what player was playing
+        //determine if the high core for that player changed
+        //read and load scores from all players
+        if(player==1){
+            if(file1.exists()) {
+                try {
+                    //reads the first line of the file and reads it as an integer
+                    highScore1 = Integer.parseInt(file1.readString());
+                    file1.writeString(String.valueOf(score), false);
+                    if (score > highScore1) {
+                        highScore1 = score;
                     }
+                    file1.writeString(String.valueOf(highScore1), false);
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore1 = 0;
                 }
-                highScore2 = Integer.parseInt(file2.readString());
-                highScore3 = Integer.parseInt(file3.readString());
             }
-            if(player==2){
-                if(file2.exists()) {
-                    try {
-                        //reads the first line of the file and reads it as an integer
-                        highScore2 = Integer.parseInt(file2.readString());
-                        file2.writeString(String.valueOf(score), false);
-                        if (score > highScore2) {
-                            highScore2 = score;
-                        }
-                        file2.writeString(String.valueOf(highScore2), false);
-                    } catch (NumberFormatException e) {
-                        //if there was no high score found, set it to 0
-                        highScore2 = 0;
-                    }
+            if(file2.exists()) {
+                try {
+                    highScore2 = Integer.parseInt(file2.readString());
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore2 = 5;
                 }
-                highScore1 = Integer.parseInt(file1.readString());
-                highScore3 = Integer.parseInt(file3.readString());
             }
-            if(player==3){
-                if(file3.exists()) {
-                    try {
-                        //reads the first line of the file and reads it as an integer
-                        highScore3 = Integer.parseInt(file3.readString());
-                        file3.writeString(String.valueOf(score), false);
-                        if (score > highScore3) {
-                            highScore3 = score;
-                        }
-                        file3.writeString(String.valueOf(highScore3), false);
-                    } catch (NumberFormatException e) {
-                        //if there was no high score found, set it to 0
-                        highScore3 = 0;
-                    }
+            if(file3.exists()) {
+                try {
+                    highScore3 = Integer.parseInt(file3.readString());
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore3 = 6;
                 }
-                highScore2 = Integer.parseInt(file2.readString());
-                highScore1 = Integer.parseInt(file1.readString());
+            }
+        }
+        if(player==2){
+            if(file2.exists()) {
+                try {
+                    //reads the first line of the file and reads it as an integer
+                    highScore2 = Integer.parseInt(file2.readString());
+                    file2.writeString(String.valueOf(score), false);
+                    if (score > highScore2) {
+                        highScore2 = score;
+                    }
+                    file2.writeString(String.valueOf(highScore2), false);
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore2 = 3;
+                }
+            }
+            if(file1.exists()) {
+                try {
+                    highScore1 = Integer.parseInt(file1.readString());
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore1 = 4;
+                }
+            }
+            if(file3.exists()) {
+                try {
+                    highScore3 = Integer.parseInt(file3.readString());
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore3 = 6;
+                }
+            }
+        }
+        if(player==3){
+            if(file3.exists()) {
+                try {
+                    //reads the first line of the file and reads it as an integer
+                    highScore3 = Integer.parseInt(file3.readString());
+                    file3.writeString(String.valueOf(score), false);
+                    if (score > highScore3) {
+                        highScore3 = score;
+                    }
+                    file3.writeString(String.valueOf(highScore3), false);
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore3 = 0;
+                }
+            }
+            if(file2.exists()) {
+                try {
+                    highScore2 = Integer.parseInt(file2.readString());
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore2 = 5;
+                }
+            }
+            if(file1.exists()) {
+                try {
+                    highScore1 = Integer.parseInt(file1.readString());
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore1 = 4;
+                }
             }
         }
     }
+
 
     @Override
     public void resize(int width, int height) {
