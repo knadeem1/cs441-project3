@@ -208,7 +208,7 @@ public class GameScreen implements Screen {
 				penalty = penalty + " X";
 
 				if(penalty.equals(" X X X")) {
-					game.setScreen(new MainMenuScreen(game, total, player));
+					game.setScreen(new MainMenuScreen(game, total, this.player));
 					dispose();
 				}
 			}
@@ -229,7 +229,7 @@ public class GameScreen implements Screen {
 
 					if(penalty.equals(" X X X")){
 						//game.font.draw(game.batch, "High Score: " + total, 100, 50);
-						game.setScreen(new MainMenuScreen(game, total, player));
+						game.setScreen(new MainMenuScreen(game, total, this.player));
 						//game.font.draw(game.batch, "High Score: " + total, 100, 50);
 						dispose();
 					}

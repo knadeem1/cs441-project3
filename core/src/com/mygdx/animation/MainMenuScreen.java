@@ -21,9 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import java.io.File;
 
 
 public class MainMenuScreen implements Screen {
@@ -33,6 +30,12 @@ public class MainMenuScreen implements Screen {
     private int highScore1;
     private int highScore2;
     private int highScore3;
+    private String p1;
+    private String p2;
+    private String p3;
+    private int max;
+    private int max2;
+    private int max3;
     private Texture backgroundImg;
     private Texture startImg;
     private Rectangle background;
@@ -47,63 +50,47 @@ public class MainMenuScreen implements Screen {
         game = gm;
         player = pl;
 
-        camera = new OrthographicCamera();
+
+        /*camera = new OrthographicCamera();
         camera.setToOrtho(false, 800,480);
-        /*backgroundImg = new Texture(Gdx.files.internal("icon.png"));
+        backgroundImg = new Texture(Gdx.files.internal("icon.png"));
         startImg = new Texture(Gdx.files.internal("start.png"));
         */
-        file1 = Gdx.files.local("scores.txt");
+        file1 = Gdx.files.local("scores1.txt");
+
         file2 = Gdx.files.local("scores2.txt");
+
         file3 = Gdx.files.local("scores3.txt");
 
-        loadScore(score, player);
-
-        /*if(score == 0)highScore = score;
-        else{
-            loadScore(score, player);
+        if(player == 1){
+            if(file1.exists()) {
+                try {
+                    //reads the first line of the file and reads it as an integer
+                    highScore1 = Integer.parseInt(file1.readString());
+                    file1.writeString(String.valueOf(score), false);
+                    if (score > highScore1) {
+                        highScore1 = score;
+                    }
+                    file1.writeString(String.valueOf(highScore1), false);
+                } catch (NumberFormatException e) {
+                    //if there was no high score found, set it to 0
+                    highScore1 = 0;
+                }
+            }
         }
 
-        background = new Rectangle();
-        background.width = 300;
-        background.height = 300;
-        background.x = 250;
-        background.y = 180;
+        loadScore(score);
 
-        start = new Rectangle();
-        start.width = 250;
-        start.height = 140;
-        start.x = 280;
-        start.y = 75;
-        */
 
-        show();
-    }
+        p1 = "Player1";
+        p2 = "Player2";
+        p3 = "Player3";
 
-    @Override
-    public void show() {
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        stage.setDebugAll(true);
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
-        /*tableContainer = new Container<>();
-
-        float sw = Gdx.graphics.getWidth();
-        float sh = Gdx.graphics.getHeight();
-
-        float cw = sw * 0.7f;
-        float ch = sh * 0.5f;
-
-        tableContainer.setSize(sw, sh);
-        tableContainer.setPosition((sw) / 2.0f, (sh) / 2.0f);
-        tableContainer.fillX();
-        */
-        String p1 = "Player1";
-        String p2 = "Player2";
-        String p3 = "Player3";
-        int max = highScore1;
-        int max2 = highScore2;
-        int max3 = highScore3;
-        /*if(highScore1>=highScore3&&highScore1>=highScore2){
+        max = highScore1;
+        max2 = highScore2;
+        max3 = highScore3;
+     /*
+        if(highScore1>=highScore3&&highScore1>=highScore2){
             max = highScore1;
             p1 = "Player1";
         }
@@ -157,7 +144,50 @@ public class MainMenuScreen implements Screen {
             max3 = highScore1;
             p3 = "Player1";
         }
+
+
+ */
+        /*if(score == 0)highScore = score;
+        else{
+            loadScore(score, player);
+        }
+
+        background = new Rectangle();
+        background.width = 300;
+        background.height = 300;
+        background.x = 250;
+        background.y = 180;
+
+        start = new Rectangle();
+        start.width = 250;
+        start.height = 140;
+        start.x = 280;
+        start.y = 75;
         */
+
+        show();
+    }
+
+    @Override
+    public void show() {
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        stage.setDebugAll(true);
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        /*tableContainer = new Container<>();
+
+        float sw = Gdx.graphics.getWidth();
+        float sh = Gdx.graphics.getHeight();
+
+        float cw = sw * 0.7f;
+        float ch = sh * 0.5f;
+
+        tableContainer.setSize(sw, sh);
+        tableContainer.setPosition((sw) / 2.0f, (sh) / 2.0f);
+        tableContainer.fillX();
+        */
+
+
         Table table = new Table(skin);
         table.setFillParent(true);
 
@@ -176,11 +206,8 @@ public class MainMenuScreen implements Screen {
         TextField nameText = new TextField("",skin);
 
         TextButton p1Button = new TextButton("Player1",skin);
-        p1Button.scaleBy(7f);
         TextButton p2Button = new TextButton("Player2",skin);
-        p2Button.scaleBy(7f);
         TextButton p3Button = new TextButton("Player3",skin);
-        p3Button.scaleBy(7f);
 
         Label scoreLabel = new Label("LeaderBoard", skin);
         scoreLabel.setAlignment(Align.center);
@@ -242,9 +269,9 @@ public class MainMenuScreen implements Screen {
         table.add(topLabel).expandY();
 
         table.row();
-        table.add(p1Button).uniform();
-        table.add(p2Button).uniform();
-        table.add(p3Button).uniform();
+        table.add(p1Button).size(300,100).uniform();
+        table.add(p2Button).size(300,100).uniform();
+        table.add(p3Button).size(300,100).uniform();
 
         table.row().colspan(3).fillX();
         table.add(scoreLabel).expandY().bottom();
@@ -284,6 +311,7 @@ public class MainMenuScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 player = 1;
                 game.setScreen(new GameScreen(game,player));
+                dispose();
             }
         });
         p2Button.addListener( new ClickListener() {
@@ -291,6 +319,7 @@ public class MainMenuScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 player = 2;
                 game.setScreen(new GameScreen(game,player));
+                dispose();
             }
         });
         p3Button.addListener( new ClickListener() {
@@ -298,6 +327,7 @@ public class MainMenuScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 player = 3;
                 game.setScreen(new GameScreen(game,player));
+                dispose();
             }
         });
     }
@@ -313,9 +343,9 @@ public class MainMenuScreen implements Screen {
         stage.act();
         stage.draw();
 
-        camera.update();
+        /*camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        /*
+
         game.batch.begin();
 
         game.batch.draw(backgroundImg,background.x,background.y);
@@ -339,7 +369,8 @@ public class MainMenuScreen implements Screen {
     }
 
     //*******NOT WORKING*******************
-    public void loadScore(int score, int player){
+    public void loadScore(int score){
+
         if(player == 0){
             //if the game started from scratch: called from CookieConstruct, player not selected yet
             //scores don't change, only read from file and loaded into variables
