@@ -11,7 +11,7 @@ public class CookieConstruct extends Game {
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
-        this.setScreen(new MainMenuScreen(this, 0));
+        this.setScreen(new MainMenuScreen(this, 0, 0));
     }
 
     public void render() {

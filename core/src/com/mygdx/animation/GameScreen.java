@@ -25,6 +25,8 @@ public class GameScreen implements Screen {
 	private OrthographicCamera camera;
 	private final CookieConstruct game;
 
+	private int player;
+
 	private Texture grassImg;
 	private Texture cloudImg;
 	private Rectangle grass;
@@ -49,8 +51,9 @@ public class GameScreen implements Screen {
 	private int tracker = 10;
 	private int speed = 50;
 
-	public GameScreen(final CookieConstruct gm) {
+	public GameScreen(final CookieConstruct gm, int pl) {
 		this.game = gm;
+		this.player = pl;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 
@@ -205,7 +208,7 @@ public class GameScreen implements Screen {
 				penalty = penalty + " X";
 
 				if(penalty.equals(" X X X")) {
-					game.setScreen(new MainMenuScreen(game, total));
+					game.setScreen(new MainMenuScreen(game, total, player));
 					dispose();
 				}
 			}
@@ -226,7 +229,7 @@ public class GameScreen implements Screen {
 
 					if(penalty.equals(" X X X")){
 						//game.font.draw(game.batch, "High Score: " + total, 100, 50);
-						game.setScreen(new MainMenuScreen(game, total));
+						game.setScreen(new MainMenuScreen(game, total, player));
 						//game.font.draw(game.batch, "High Score: " + total, 100, 50);
 						dispose();
 					}
