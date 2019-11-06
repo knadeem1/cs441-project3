@@ -222,7 +222,7 @@ public class MainMenuScreen implements Screen {
         Label topLabel = new Label("COOKIE MONSTER", skin);
         topLabel.setAlignment(Align.center);
         topLabel.setFontScale(7);
-        topLabel.setColor(Color.TEAL);
+        topLabel.setColor(Color.BLUE);
 
         Label nameLabel = new Label("Name:", skin);
         nameLabel.setFontScale(4);
@@ -232,18 +232,18 @@ public class MainMenuScreen implements Screen {
 
         TextButton p1Button = new TextButton("Player1",skin);
         p1Button.getLabel().setFontScale(4.5f);
-        p1Button.setColor(Color.ORANGE);
+        p1Button.setColor(Color.YELLOW);
         TextButton p2Button = new TextButton("Player2",skin);
         p2Button.getLabel().setFontScale(4.5f);
-        p2Button.setColor(Color.ORANGE);
+        p2Button.setColor(Color.YELLOW);
         TextButton p3Button = new TextButton("Player3",skin);
         p3Button.getLabel().setFontScale(4.5f);
-        p3Button.setColor(Color.ORANGE);
+        p3Button.setColor(Color.YELLOW);
 
         Label scoreLabel = new Label("LEADERBOARD", skin);
         scoreLabel.setAlignment(Align.center);
         scoreLabel.setFontScale(4.5f);
-        scoreLabel.setColor(Color.OLIVE);
+        scoreLabel.setColor(Color.ROYAL);
 
         Label rankLabel = new Label("Rank", skin);
         rankLabel.setAlignment(Align.center);
