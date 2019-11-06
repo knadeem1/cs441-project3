@@ -56,7 +56,7 @@ Upgrade level every ten points coolected. ***Every three penalties results in ga
 
 **STEP 1**: Click the start button to begin:
 
-![alt text](screenshots/figure1.png)
+![alt text](screenshots)
 
 **STEP 2**: Control the 'Cookie Monster' object with the keyboard keys: left or right, or by touching the screen to feed it as many cookies as possible. Avoid bombs:
 
