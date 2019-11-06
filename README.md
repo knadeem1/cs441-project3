@@ -1,4 +1,4 @@
-# CS 441 Project3
+# CS 441 Project 4
 ## <ins>COOKIE MONSTER GAME</ins>
 
 ### <ins>UPDATES</ins>
