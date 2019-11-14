@@ -73,7 +73,7 @@ public class MainMenuScreen implements Screen {
         }
 
         if(player == 1){
-            if (score >highScore1) {
+            if (score > highScore1) {
                 prefs.putInteger("highScore1", score);
                 prefs.flush();
             }
@@ -83,7 +83,7 @@ public class MainMenuScreen implements Screen {
         }
 
         if(player == 2){
-            if (score >highScore2) {
+            if (score > highScore2) {
                 prefs.putInteger("highScore2", score);
                 prefs.flush();
             }
@@ -92,7 +92,7 @@ public class MainMenuScreen implements Screen {
             highScore3 = prefs.getInteger("highScore3");
         }
         if(player == 3){
-            if (score >highScore3) {
+            if (score > highScore3) {
                 prefs.putInteger("highScore3", score);
                 prefs.flush();
             }
@@ -343,10 +343,25 @@ public class MainMenuScreen implements Screen {
         /*
         table.row().expandX().fillX();
         table.add(buttonTable).colspan(3);
+        table.row().expandX().fillX();
+        table.add(buttonTable).colspan(3);
+        table.row().expandX().fillX();
+        table.add(buttonTable).colspan(3);
+        table.row().expandX.fillX();
+        table.add(buttonTable).colspan(3);
+        table.row().expandX().fillX();
+        table.add(buttonTable).colspan(3);
+
 
         buttonTable.row().fillX().expandX();
         buttonTable.add(buttonA).width(400);
 
+        buttonTable.row().fillX.expandX();
+        buttonTable.add(buttonA).width(400);
+        buttonTable.row().fillX.expandX();
+        buttonTable.add(buttonA).width(400);
+        buttonTable.row().fillX.expandX();
+        button
         */
         stage.addActor(table);
 

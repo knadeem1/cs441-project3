@@ -83,7 +83,6 @@ public class SideMenuScreen extends ApplicationAdapter {
         stage.addActor(tableContainer);
 
         Gdx.input.setInputProcessor(stage);
-
     }
 
     @Override
