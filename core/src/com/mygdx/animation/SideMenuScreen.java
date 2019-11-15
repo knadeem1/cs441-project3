@@ -60,8 +60,8 @@ public class SideMenuScreen extends ApplicationAdapter {
         table.row().colspan(3).expandX().fillX();
         table.add(topLabel).fillX();
 
-        //table.row().colspan(3).expandX().fillX();
-        //table.add(slider).fillX();
+        table.row().colspan(3).expandX().fillX();
+        table.add(slider).fillX();
 
         table.row().colspan(3).expandX().fillX();
         table.add(anotherLabel).fillX();
