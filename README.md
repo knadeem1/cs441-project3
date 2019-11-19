@@ -1,34 +1,8 @@
-# CS 441 Project 4
+# CS 441 Project 5
 ## <ins>COOKIE MONSTER GAME</ins>
 
 ### <ins>UPDATES</ins>
-**General:**
-
--Backgroud music begins when game starts
-
--Sound effects added for eating a cookie
-
--Sound effects added for eating a bomb
-
--Sound effects added for game over state
-
-**Main Menu Screen:**
-
--Table layout consisting of different widgets
-
--Option of three functioning player buttons for user to play as
-
--Leaderboard added with ranking for each player
-
--System for maintaining history of a player's score to be restored when game begins/ends
-
-**Game Screen:**
-
--Better coordination of objects in game for when they collide
-
--Level variations as explained below
-
--Speed variations added for falling objects
+Player buttons on the MainMenuScreen are fully functioning in this new update. User can select one of the three options, as displayed in the first image, to play as one of the players and see how they rank against the other players on the leaderboard. Also, leaderboard will automatically update each time a new highscore is achieved.
 
 ### <ins>DESCRIPTION:</ins>
 This simple game consists of two screens: Main Menu and Game screens. The game begins with the main menu screen which displays the 'START' button and the accumulated 'HIGH SCORE'. Clicking on the screen will change to the 'Game' screen, which consists of a cookie monster at the bottom of the screen and animated 'Cookie' and 'Bomb' objects falling vertically. The objective of the game is to feed the cookie monster as many cookies as possible while avoiding the bombs.
