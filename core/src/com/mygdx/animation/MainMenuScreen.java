@@ -1,10 +1,8 @@
 package com.mygdx.animation;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,10 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -23,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-
 
 public class MainMenuScreen implements Screen {
     private final CookieConstruct game;
@@ -38,13 +31,6 @@ public class MainMenuScreen implements Screen {
     private int max;
     private int max2;
     private int max3;
-    private Texture backgroundImg;
-    private Texture startImg;
-    private Rectangle background;
-    private Rectangle start;
-    private FileHandle file1;
-    private FileHandle file2;
-    private FileHandle file3;
     private Skin skin;
     private int player;
 
@@ -52,18 +38,6 @@ public class MainMenuScreen implements Screen {
         game = gm;
         player = pl;
 
-
-        /*camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800,480);
-        backgroundImg = new Texture(Gdx.files.internal("icon.png"));
-        startImg = new Texture(Gdx.files.internal("start.png"));
-
-        file1 = Gdx.files.local("scores1.txt");
-
-        file2 = Gdx.files.local("scores2.txt");
-
-        file3 = Gdx.files.local("scores3.txt");
-        */
         Preferences prefs = Gdx.app.getPreferences("game preferences");
 
         if(player == 0){
@@ -100,11 +74,6 @@ public class MainMenuScreen implements Screen {
             highScore2 = prefs.getInteger("highScore2");
             highScore3 = prefs.getInteger("highScore3");
         }
-
-
-
-        //loadScore(score);
-
 
         p1 = "";
         p2 = "";
@@ -168,25 +137,6 @@ public class MainMenuScreen implements Screen {
             max3 = highScore1;
             p3 = "Player1";
         }
-
-
-        /*if(score == 0)highScore = score;
-        else{
-            loadScore(score, player);
-        }
-
-        background = new Rectangle();
-        background.width = 300;
-        background.height = 300;
-        background.x = 250;
-        background.y = 180;
-
-        start = new Rectangle();
-        start.width = 250;
-        start.height = 140;
-        start.x = 280;
-        start.y = 75;
-        */
 
         show();
     }
@@ -306,9 +256,6 @@ public class MainMenuScreen implements Screen {
         score3.setFontScale(2.5f);
         score3.setColor(Color.GOLD);
 
-        //checkBoxA.setTransform(true);
-        //checkBoxA.scaleBy(2f);
-
         table.row().colspan(3).expandX().fillX();
         table.add(topLabel).expandY();
 
@@ -340,29 +287,6 @@ public class MainMenuScreen implements Screen {
         table.add(player3);
         table.add(score3);
 
-        /*
-        table.row().expandX().fillX();
-        table.add(buttonTable).colspan(3);
-        table.row().expandX().fillX();
-        table.add(buttonTable).colspan(3);
-        table.row().expandX().fillX();
-        table.add(buttonTable).colspan(3);
-        table.row().expandX.fillX();
-        table.add(buttonTable).colspan(3);
-        table.row().expandX().fillX();
-        table.add(buttonTable).colspan(3);
-
-
-        buttonTable.row().fillX().expandX();
-        buttonTable.add(buttonA).width(400);
-
-        buttonTable.row().fillX.expandX();
-        buttonTable.add(buttonA).width(400);
-        buttonTable.row().fillX.expandX();
-        buttonTable.add(buttonA).width(400);
-        buttonTable.row().fillX.expandX();
-        button
-        */
         stage.addActor(table);
 
         p1Button.addListener( new ClickListener() {
@@ -401,175 +325,8 @@ public class MainMenuScreen implements Screen {
 
         stage.act();
         stage.draw();
-
-        /*camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
-
-        game.batch.begin();
-
-        game.batch.draw(backgroundImg,background.x,background.y);
-        game.batch.draw(startImg,start.x,start.y);
-
-        game.font.setColor(Color.WHITE);
-        game.font.getData().setScale(2);
-        //game.font.draw(game.batch, "COOKIE MONSTER", 200, 150);
-        //game.font.draw(game.batch, "START", 320, 100);
-        game.font.setColor(Color.BLUE);
-        game.font.draw(game.batch, "HIGH SCORE: " + highScore, 285, 60);
-        game.font.getData().setScale(2);
-
-        game.batch.end();
-
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
-            dispose();
-        }
-         */
-    }
-/*
-    //*******NOT WORKING*******************
-    public void loadScore(int score){
-
-        if(player == 0){
-            //if the game started from scratch: called from CookieConstruct, player not selected yet
-            //scores don't change, only read from file and loaded into variables
-            for(int i=1;i<4;i++){
-                if(i==1){
-                    if(file1.exists()) {
-                        try {
-                            highScore1 = Integer.parseInt(file1.readString());
-                        } catch (NumberFormatException e) {
-                            //if there was no high score found, set it to 0
-                            highScore1 = 4;
-                        }
-                    }
-                }
-                if(i==2){
-                    if(file2.exists()) {
-                        try {
-                            highScore2 = Integer.parseInt(file2.readString());
-                        } catch (NumberFormatException e) {
-                            //if there was no high score found, set it to 0
-                            highScore2 = 5;
-                        }
-                    }
-                }
-                if(i==3){
-                    if(file3.exists()) {
-                        try {
-                            highScore3 = Integer.parseInt(file3.readString());
-                        } catch (NumberFormatException e) {
-                            //if there was no high score found, set it to 0
-                            highScore3 = 6;
-                        }
-                    }
-                }
-            }
-        }
-
-        //if returned a score for a player from GameScreen()
-        //figure out what player was playing
-        //determine if the high core for that player changed
-        //read and load scores from all players
-        if(player==1){
-            if(file1.exists()) {
-                try {
-                    //reads the first line of the file and reads it as an integer
-                    highScore1 = Integer.parseInt(file1.readString());
-                    file1.writeString(String.valueOf(score), false);
-                    if (score > highScore1) {
-                        highScore1 = score;
-                    }
-                    file1.writeString(String.valueOf(highScore1), false);
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore1 = 0;
-                }
-            }
-            if(file2.exists()) {
-                try {
-                    highScore2 = Integer.parseInt(file2.readString());
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore2 = 5;
-                }
-            }
-            if(file3.exists()) {
-                try {
-                    highScore3 = Integer.parseInt(file3.readString());
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore3 = 6;
-                }
-            }
-        }
-        if(player==2){
-            if(file2.exists()) {
-                try {
-                    //reads the first line of the file and reads it as an integer
-                    highScore2 = Integer.parseInt(file2.readString());
-                    file2.writeString(String.valueOf(score), false);
-                    if (score > highScore2) {
-                        highScore2 = score;
-                    }
-                    file2.writeString(String.valueOf(highScore2), false);
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore2 = 3;
-                }
-            }
-            if(file1.exists()) {
-                try {
-                    highScore1 = Integer.parseInt(file1.readString());
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore1 = 4;
-                }
-            }
-            if(file3.exists()) {
-                try {
-                    highScore3 = Integer.parseInt(file3.readString());
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore3 = 6;
-                }
-            }
-        }
-        if(player==3){
-            if(file3.exists()) {
-                try {
-                    //reads the first line of the file and reads it as an integer
-                    highScore3 = Integer.parseInt(file3.readString());
-                    file3.writeString(String.valueOf(score), false);
-                    if (score > highScore3) {
-                        highScore3 = score;
-                    }
-                    file3.writeString(String.valueOf(highScore3), false);
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore3 = 0;
-                }
-            }
-            if(file2.exists()) {
-                try {
-                    highScore2 = Integer.parseInt(file2.readString());
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore2 = 5;
-                }
-            }
-            if(file1.exists()) {
-                try {
-                    highScore1 = Integer.parseInt(file1.readString());
-                } catch (NumberFormatException e) {
-                    //if there was no high score found, set it to 0
-                    highScore1 = 4;
-                }
-            }
-        }
     }
 
-*/
     @Override
     public void resize(int width, int height) {
         //stage.getViewport().update(width, height);
