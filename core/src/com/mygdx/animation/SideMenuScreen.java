@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class SideMenuScreen extends ApplicationAdapter {
 
+
     private Stage stage;
 
     public void create() {
@@ -42,9 +43,13 @@ public class SideMenuScreen extends ApplicationAdapter {
 
         Table table = new Table(skin);
 
+        tableContainer.setSize(sw,sh);
+        tableContainer.setPosition((sw-100),sh-100);
+        tableContainer.fillX();
+
         Label topLabel = new Label("COOKIE MONSTER", skin);
         topLabel.setAlignment(Align.center);
-        //Slider slider = new Slider(0, 100, 1, false, skin);
+        Slider slider = new Slider(0, 100, 1, false, skin);
         Label anotherLabel = new Label("LeaderBoard", skin);
         anotherLabel.setAlignment(Align.center);
 
@@ -55,7 +60,10 @@ public class SideMenuScreen extends ApplicationAdapter {
         Table buttonTable = new Table(skin);
 
         TextButton buttonA = new TextButton("Start", skin);
-        TextButton buttonB = new TextButton("RIGHT", skin);
+        TextButton buttonB = new TextButton("Finish", skin);
+
+        TextButton buttonC = new TextButton("Begin", skin);
+        TextButton buttonD = new TextButton("End", skin);
 
         table.row().colspan(3).expandX().fillX();
         table.add(topLabel).fillX();
@@ -83,6 +91,7 @@ public class SideMenuScreen extends ApplicationAdapter {
         stage.addActor(tableContainer);
 
         Gdx.input.setInputProcessor(stage);
+
     }
 
     @Override
