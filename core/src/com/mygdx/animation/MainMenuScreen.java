@@ -1,13 +1,15 @@
 package com.mygdx.animation;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
+//import com.badlogic.gdx.graphics.OrthographicCamera;
+//import com.badlogic.gdx.graphics.Texture;
+//import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -21,7 +23,7 @@ import com.badlogic.gdx.utils.Align;
 public class MainMenuScreen implements Screen {
     private final CookieConstruct game;
     private Stage stage;
-    private OrthographicCamera camera;
+    //private OrthographicCamera camera;
     private int highScore1;
     private int highScore2;
     private int highScore3;
@@ -139,6 +141,7 @@ public class MainMenuScreen implements Screen {
         }
 
         show();
+        webAccess();
     }
 
     @Override
@@ -325,6 +328,28 @@ public class MainMenuScreen implements Screen {
 
         stage.act();
         stage.draw();
+    }
+
+    public void webAccess(){
+        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
+        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://cs.binghamton.edu/~pmadden/courses/441score/postscore.php?").content("player=one&game=cookie&score=6").build();
+        Net.HttpResponseListener httpResponseListener = new Net.HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+
+            }
+
+            @Override
+            public void failed(Throwable t) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        };
+        Gdx.net.sendHttpRequest(httpRequest, httpResponseListener);
     }
 
     @Override
