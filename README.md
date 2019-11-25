@@ -1,8 +1,8 @@
-# CS 441 Project 5
+# CS 441 Project 6
 ## <ins>COOKIE MONSTER GAME</ins>
 
 ### <ins>UPDATES</ins>
-Player buttons on the MainMenuScreen are fully functioning in this new update. User can select one of the three options, as displayed in the first image, to play as one of the players and see how they rank against the other players on the leaderboard. Also, leaderboard will automatically update each time a new highscore is achieved.
+Web access functioning added: The highscore of the game is uploaded to the class database online. Also, scores from other games are downloaded from the server to be displayed on the gamescreen. 
 
 ### <ins>DESCRIPTION:</ins>
 This simple game consists of two screens: Main Menu and Game screens. The game begins with the main menu screen which displays the 'START' button and the accumulated 'HIGH SCORE'. Clicking on the screen will change to the 'Game' screen, which consists of a cookie monster at the bottom of the screen and animated 'Cookie' and 'Bomb' objects falling vertically. The objective of the game is to feed the cookie monster as many cookies as possible while avoiding the bombs.
