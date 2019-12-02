@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Json;
 
 public class MainMenuScreen implements Screen {
     private final CookieConstruct game;
@@ -39,7 +40,7 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final CookieConstruct gm, int score, int pl) {
         game = gm;
         player = pl;
-
+        webAccess();
         Preferences prefs = Gdx.app.getPreferences("game preferences");
 
         if(player == 0){
@@ -141,7 +142,6 @@ public class MainMenuScreen implements Screen {
         }
 
         show();
-        webAccess();
     }
 
     @Override
@@ -331,25 +331,27 @@ public class MainMenuScreen implements Screen {
     }
 
     public void webAccess(){
-        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://cs.binghamton.edu/~pmadden/courses/441score/postscore.php?").content("player=one&game=cookie&score=6").build();
-        Net.HttpResponseListener httpResponseListener = new Net.HttpResponseListener() {
+
+        String URL = "www.google.com";
+        Net.HttpRequest httpPOST = new Net.HttpRequest(Net.HttpMethods.GET);
+        httpPOST.setUrl(URL);
+        //httpPOST.setContent("?player=ONE&game=COOKIEMONSTER&score=600");
+        Gdx.net.sendHttpRequest(httpPOST, new Net.HttpResponseListener() {
             @Override
             public void handleHttpResponse(Net.HttpResponse httpResponse) {
-
+                System.out.println(httpResponse);
             }
 
             @Override
             public void failed(Throwable t) {
-
+                System.out.println("PROCESS FAILURE REPORT");
             }
 
             @Override
             public void cancelled() {
-
+                System.out.println("PROCESS HAS CANCELLED");
             }
-        };
-        Gdx.net.sendHttpRequest(httpRequest, httpResponseListener);
+        });
     }
 
     @Override
