@@ -244,7 +244,6 @@ public class GameScreen implements Screen {
 						tracker += 10;
 					}
 				}
-
 			}
 		}
 

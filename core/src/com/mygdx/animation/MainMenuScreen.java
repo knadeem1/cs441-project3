@@ -40,7 +40,6 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final CookieConstruct gm, int score, int pl) {
         game = gm;
         player = pl;
-        webAccess();
         Preferences prefs = Gdx.app.getPreferences("game preferences");
 
         if(player == 0){
@@ -328,30 +327,6 @@ public class MainMenuScreen implements Screen {
 
         stage.act();
         stage.draw();
-    }
-
-    public void webAccess(){
-
-        String URL = "www.google.com";
-        Net.HttpRequest httpPOST = new Net.HttpRequest(Net.HttpMethods.GET);
-        httpPOST.setUrl(URL);
-        //httpPOST.setContent("?player=ONE&game=COOKIEMONSTER&score=600");
-        Gdx.net.sendHttpRequest(httpPOST, new Net.HttpResponseListener() {
-            @Override
-            public void handleHttpResponse(Net.HttpResponse httpResponse) {
-                System.out.println(httpResponse);
-            }
-
-            @Override
-            public void failed(Throwable t) {
-                System.out.println("PROCESS FAILURE REPORT");
-            }
-
-            @Override
-            public void cancelled() {
-                System.out.println("PROCESS HAS CANCELLED");
-            }
-        });
     }
 
     @Override
