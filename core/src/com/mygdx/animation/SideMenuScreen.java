@@ -1,103 +1,168 @@
 package com.mygdx.animation;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+//import com.badlogic.gdx.graphics.OrthographicCamera;
+//import com.badlogic.gdx.graphics.Texture;
+//import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.Json;
 
-
-public class SideMenuScreen extends ApplicationAdapter {
-
-
+public class SideMenuScreen implements Screen {
+    private final CookieConstruct game;
     private Stage stage;
+    //private OrthographicCamera camera;
+    private int highScore1;
+    private int highScore2;
+    private int highScore3;
+    private String p1;
+    private String p2;
+    private String p3;
+    private int max;
+    private int max2;
+    private int max3;
+    private Skin skin;
+    private int player;
 
-    public void create() {
-        stage = new Stage(new ScreenViewport());
-        //stage.setDebugAll(true);
+    public SideMenuScreen(final CookieConstruct gm, int score, int pl) {
+        game = gm;
+        player = pl;
+        Preferences prefs = Gdx.app.getPreferences("game preferences");
 
-        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-        Container<Table> tableContainer = new Container<>();
+        if(player == 0){
+            highScore1 = prefs.getInteger("highScore1");
+            highScore2 = prefs.getInteger("highScore2");
+            highScore3 = prefs.getInteger("highScore3");
+        }
 
-        float sw = Gdx.graphics.getWidth();
-        float sh = Gdx.graphics.getHeight();
+        if(player == 1){
+            if (score > highScore1) {
+                prefs.putInteger("highScore1", score);
+                prefs.flush();
+            }
+            highScore1 = prefs.getInteger("highScore1");
+            highScore2 = prefs.getInteger("highScore2");
+            highScore3 = prefs.getInteger("highScore3");
+        }
 
-        float cw = sw * 0.7f;
-        float ch = sh * 0.5f;
+        if(player == 2){
+            if (score > highScore2) {
+                prefs.putInteger("highScore2", score);
+                prefs.flush();
+            }
+            highScore1 = prefs.getInteger("highScore1");
+            highScore2 = prefs.getInteger("highScore2");
+            highScore3 = prefs.getInteger("highScore3");
+        }
+        if(player == 3){
+            if (score > highScore3) {
+                prefs.putInteger("highScore3", score);
+                prefs.flush();
+            }
+            highScore1 = prefs.getInteger("highScore1");
+            highScore2 = prefs.getInteger("highScore2");
+            highScore3 = prefs.getInteger("highScore3");
+        }
 
-        tableContainer.setSize(cw, ch);
-        tableContainer.setPosition((sw - cw) / 2.0f, (sh - ch) / 2.0f);
-        tableContainer.fillX();
+        p1 = "";
+        p2 = "";
+        p3 = "";
 
-        Table table = new Table(skin);
+        max = 0;
+        max2 = 0;
+        max3 = 0;
 
-        tableContainer.setSize(sw,sh);
-        tableContainer.setPosition((sw-100),sh-100);
-        tableContainer.fillX();
+        if(highScore1>=highScore3&&highScore1>=highScore2){
+            max = highScore1;
+            p1 = "Player1";
+        }
+        if(highScore2>=highScore3&&highScore2>=highScore1){
+            max = highScore2;
+            p1 = "Player2";
+        }
+        if(highScore3>=highScore1&&highScore3>=highScore2){
+            max = highScore3;
+            p1 = "Player3";
+        }
+        if(max==highScore1){
+            if(highScore2>=highScore3){
+                max2 = highScore2;
+                p2 = "Player2";
+            }
+            else if(highScore3>highScore2){
+                max2 = highScore3;
+                p2 = "Player3";
+            }
+        }
+        if(max==highScore2){
+            if(highScore1>=highScore3){
+                max2 = highScore1;
+                p2 = "Player1";
+            }
+            else if(highScore3>highScore1){
+                max2 = highScore3;
+                p2 = "Player3";
+            }
+        }
+        if(max==highScore3){
+            if(highScore2>=highScore1){
+                max2 = highScore2;
+                p2 = "Player2";
+            }
+            else if(highScore1>highScore2){
+                max2 = highScore1;
+                p2 = "Player1";
+            }
+        }
+        if((max==highScore1 && max2==highScore2) || (max==highScore2 && max2 == highScore1)){
+            max3 = highScore3;
+            p3 = "Player3";
+        }
+        if((max==highScore1 && max2==highScore3) || (max==highScore3 && max2 == highScore1)){
+            max3 = highScore2;
+            p3 = "Player2";
+        }
+        if((max==highScore3 && max2==highScore2) || (max==highScore2 && max2 == highScore3)){
+            max3 = highScore1;
+            p3 = "Player1";
+        }
 
-        Label topLabel = new Label("COOKIE MONSTER", skin);
-        topLabel.setAlignment(Align.center);
-        Slider slider = new Slider(0, 100, 1, false, skin);
-        Label anotherLabel = new Label("LeaderBoard", skin);
-        anotherLabel.setAlignment(Align.center);
-
-        CheckBox checkBoxA = new CheckBox("User 1", skin);
-        CheckBox checkBoxB = new CheckBox("User 2", skin);
-        CheckBox checkBoxC = new CheckBox("User 3", skin);
-
-        Table buttonTable = new Table(skin);
-
-        TextButton buttonA = new TextButton("Start", skin);
-        TextButton buttonB = new TextButton("Finish", skin);
-
-        TextButton buttonC = new TextButton("Begin", skin);
-        TextButton buttonD = new TextButton("End", skin);
-
-        table.row().colspan(3).expandX().fillX();
-        table.add(topLabel).fillX();
-
-        table.row().colspan(3).expandX().fillX();
-        table.add(slider).fillX();
-
-        table.row().colspan(3).expandX().fillX();
-        table.add(anotherLabel).fillX();
-
-        table.row().expandX().fillX();
-        table.add(checkBoxA).expandX().fillX();
-        table.add(checkBoxB).expandX().fillX();
-        table.add(checkBoxC).expandX().fillX();
-
-        table.row().expandX().fillX();
-        table.add(buttonTable).colspan(3);
-
-        buttonTable.pad(16);
-        buttonTable.row().fillX().expandX();
-        buttonTable.add(buttonA).width(cw/3.0f);
-        buttonTable.add(buttonB).width(cw/3.0f);
-
-        tableContainer.setActor(table);
-        stage.addActor(tableContainer);
-
-        Gdx.input.setInputProcessor(stage);
-
+        show();
     }
 
     @Override
-    public void render() {
-        Gdx.gl.glClearColor( 0, 0, 0, 0 );
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+    public void show() {
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+
+        Table table = new Table(skin);
+        table.setFillParent(true);
+
+        stage.addActor(table);
+
+    }
+
+
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         stage.act();
         stage.draw();
@@ -105,21 +170,23 @@ public class SideMenuScreen extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
+        //stage.getViewport().update(width, height);
+    }
 
+    @Override
+    public void hide() {
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }
+
