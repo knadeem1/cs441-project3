@@ -35,48 +35,44 @@ public class MainMenuScreen implements Screen {
     private int max2;
     private int max3;
     private Skin skin;
-    private int player;
+    private String player;
 
-    public MainMenuScreen(final CookieConstruct gm, int score, int pl) {
+    public MainMenuScreen(final CookieConstruct gm, int score, String pl) {
         game = gm;
         player = pl;
         Preferences prefs = Gdx.app.getPreferences("game preferences");
 
-        if(player == 0){
+        if(player == ""){
             highScore1 = prefs.getInteger("highScore1");
             highScore2 = prefs.getInteger("highScore2");
             highScore3 = prefs.getInteger("highScore3");
         }
-
-        if(player == 1){
-            if (score > highScore1) {
-                prefs.putInteger("highScore1", score);
-                prefs.flush();
-            }
-            highScore1 = prefs.getInteger("highScore1");
-            highScore2 = prefs.getInteger("highScore2");
-            highScore3 = prefs.getInteger("highScore3");
-        }
-
-        if(player == 2){
-            if (score > highScore2) {
-                prefs.putInteger("highScore2", score);
-                prefs.flush();
-            }
-            highScore1 = prefs.getInteger("highScore1");
-            highScore2 = prefs.getInteger("highScore2");
-            highScore3 = prefs.getInteger("highScore3");
-        }
-        if(player == 3){
+        else {
             if (score > highScore3) {
-                prefs.putInteger("highScore3", score);
-                prefs.flush();
+                if (score > highScore2) {
+                    if (score > highScore1) {
+                        prefs.putString("player1", player);
+                        prefs.putInteger("highScore1", score);
+                        prefs.flush();
+                    } else {
+                        prefs.putString("player2", player);
+                        prefs.putInteger("highScore2", score);
+                        prefs.flush();
+                    }
+                } else {
+                    prefs.putString("player3", player);
+                    prefs.putInteger("highScore3", score);
+                    prefs.flush();
+                }
             }
             highScore1 = prefs.getInteger("highScore1");
             highScore2 = prefs.getInteger("highScore2");
             highScore3 = prefs.getInteger("highScore3");
+            p1 = prefs.getString("player1");
+            p2 = prefs.getString("player2");
+            p3 = prefs.getString("player3");
         }
-
+        /*
         p1 = "";
         p2 = "";
         p3 = "";
@@ -139,7 +135,7 @@ public class MainMenuScreen implements Screen {
             max3 = highScore1;
             p3 = "Player1";
         }
-
+        */
         show();
     }
 
@@ -243,17 +239,17 @@ public class MainMenuScreen implements Screen {
         player3.setFontScale(2.5f);
         player3.setColor(Color.GOLD);
 
-        Label score1 = new Label(String.valueOf(max), skin);
+        Label score1 = new Label(String.valueOf(highScore1), skin);
         score1.setAlignment(Align.center);
         score1.setFontScale(2.5f);
         score1.setColor(Color.GOLD);
 
-        Label score2 = new Label(String.valueOf(max2), skin);
+        Label score2 = new Label(String.valueOf(highScore2), skin);
         score2.setAlignment(Align.center);
         score2.setFontScale(2.5f);
         score2.setColor(Color.GOLD);
 
-        Label score3 = new Label(String.valueOf(max3), skin);
+        Label score3 = new Label(String.valueOf(highScore3), skin);
         score3.setAlignment(Align.center);
         score3.setFontScale(2.5f);
         score3.setColor(Color.GOLD);
@@ -294,7 +290,6 @@ public class MainMenuScreen implements Screen {
         p1Button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                player = 1;
                 game.setScreen(new GameScreen(game,player));
                 dispose();
             }
@@ -302,7 +297,6 @@ public class MainMenuScreen implements Screen {
         p2Button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                player = 2;
                 game.setScreen(new GameScreen(game,player));
                 dispose();
             }
@@ -310,7 +304,6 @@ public class MainMenuScreen implements Screen {
         p3Button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                player = 3;
                 game.setScreen(new GameScreen(game,player));
                 dispose();
             }
