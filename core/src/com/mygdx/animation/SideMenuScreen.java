@@ -57,29 +57,29 @@ public class SideMenuScreen implements Screen {
 
         //stage.addActor(table);
 
-        Label topLabel = new Label("ENTER NAME:", skin);
+        Label topLabel = new Label("E N T E R  N A M E  B E L O W", skin);
         topLabel.setAlignment(Align.center);
-        topLabel.setFontScale(6);
-        topLabel.setColor(Color.GOLDENROD);
+        topLabel.setFontScale(7);
+        topLabel.setColor(Color.FIREBRICK);
 
         final TextField nameText = new TextField("",skin);
         nameText.setAlignment(Align.center);
         player = nameText.getText();
-        nameText.setColor(Color.GOLDENROD);
+        nameText.setColor(Color.LIGHT_GRAY);
 
-        TextButton homeButton = new TextButton("HOME",skin);
+        TextButton homeButton = new TextButton("R E T U R N",skin);
         homeButton.getLabel().setFontScale(4f);
         homeButton.getLabel().setAlignment(Align.center);
-        homeButton.setColor(Color.GOLDENROD);
+        homeButton.setColor(Color.TEAL);
 
         table.row().expandY();
         table.add(topLabel);
 
         table.row();
-        table.add(nameText).size(400,130).fill();
+        table.add(nameText).size(450,150).fill();
 
         table.row();
-        table.add(homeButton).size(250,150).expandY();
+        table.add(homeButton).size(370,200).expandY();
 
         stage.addActor(table);
 

@@ -7,15 +7,18 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Json;
 
@@ -34,11 +37,19 @@ public class MainMenuScreen implements Screen {
     private int max3;
     private Skin skin;
     private String player;
+    private Texture backgroundImg;
 
     public MainMenuScreen(final CookieConstruct gm, int score, String pl) {
         game = gm;
         player = pl;
         Preferences prefs = Gdx.app.getPreferences("game preferences");
+
+        highScore1 = prefs.getInteger("highScore1");
+        highScore2 = prefs.getInteger("highScore2");
+        highScore3 = prefs.getInteger("highScore3");
+        p1 = prefs.getString("player1");
+        p2 = prefs.getString("player2");
+        p3 = prefs.getString("player3");
 
         if(player == ""){
             highScore1 = prefs.getInteger("highScore1");
@@ -52,10 +63,17 @@ public class MainMenuScreen implements Screen {
             if (score > highScore3) {
                 if (score > highScore2) {
                     if (score > highScore1) {
+                        prefs.putString("player3",prefs.getString("player2"));
+                        prefs.putInteger("highScore3",prefs.getInteger("highScore2"));
+                        prefs.putString("player2",prefs.getString("player1"));
+                        prefs.putInteger("highScore2",prefs.getInteger("highScore1"));
                         prefs.putString("player1", player);
                         prefs.putInteger("highScore1", score);
                         prefs.flush();
+
                     } else {
+                        prefs.putString("player3",prefs.getString("player2"));
+                        prefs.putInteger("highScore3",prefs.getInteger("highScore2"));
                         prefs.putString("player2", player);
                         prefs.putInteger("highScore2", score);
                         prefs.flush();
@@ -74,12 +92,6 @@ public class MainMenuScreen implements Screen {
             p3 = prefs.getString("player3");
         }
 
-        highScore1 = prefs.getInteger("highScore1");
-        highScore2 = prefs.getInteger("highScore2");
-        highScore3 = prefs.getInteger("highScore3");
-        p1 = prefs.getString("player1");
-        p2 = prefs.getString("player2");
-        p3 = prefs.getString("player3");
         /*
         p1 = "";
         p2 = "";
@@ -175,63 +187,58 @@ public class MainMenuScreen implements Screen {
         //table.setPosition(400,200);
         //stage.addActor(table);
 
-        Label topLabel = new Label("COOKIE MONSTER", skin);
+        Label topLabel = new Label("C O O K I E  M O N S T E R", skin);
         topLabel.setAlignment(Align.center);
-        topLabel.setFontScale(7);
-        topLabel.setColor(Color.BLUE);
+        topLabel.setFontScale(8);
+        topLabel.setColor(Color.TEAL);
 
-        Image picture = new Image(this.getAssetManager().get("res/heart.png", Texture.class));
-        picture.
         Label nameLabel = new Label("Name:", skin);
         nameLabel.setFontScale(4);
 
-        TextField nameText = new TextField("",skin);
-
-
-        TextButton p1Button = new TextButton("PLAY!",skin);
-        p1Button.getLabel().setFontScale(4.5f);
-        p1Button.setColor(Color.YELLOW);
-        TextButton p2Button = new TextButton("Player2",skin);
+        TextButton button = new TextButton(" P L A Y ",skin);
+        button.getLabel().setFontScale(5f);
+        button.setColor(Color.ORANGE);
+        /*TextButton p2Button = new TextButton("Player2",skin);
         p2Button.getLabel().setFontScale(4.5f);
         p2Button.setColor(Color.YELLOW);
         TextButton p3Button = new TextButton("Player3",skin);
         p3Button.getLabel().setFontScale(4.5f);
         p3Button.setColor(Color.YELLOW);
-
-        Label scoreLabel = new Label("LEADERBOARD", skin);
+*/
+        Label scoreLabel = new Label("L E A D E R B O A R D", skin);
         scoreLabel.setAlignment(Align.center);
         scoreLabel.setFontScale(4.5f);
-        scoreLabel.setColor(Color.ROYAL);
+        scoreLabel.setColor(Color.SALMON);
 
-        Label rankLabel = new Label("Rank", skin);
+        Label rankLabel = new Label("RANK", skin);
         rankLabel.setAlignment(Align.center);
         rankLabel.setFontScale(3f);
-        rankLabel.setColor(Color.GOLDENROD);
+        rankLabel.setColor(Color.SALMON);
 
-        Label playerLabel = new Label("Name", skin);
+        Label playerLabel = new Label("NAME", skin);
         playerLabel.setAlignment(Align.center);
         playerLabel.setFontScale(3f);
-        playerLabel.setColor(Color.GOLDENROD);
+        playerLabel.setColor(Color.SALMON);
 
-        Label dataLabel = new Label("Points", skin);
+        Label dataLabel = new Label("POINTS", skin);
         dataLabel.setAlignment(Align.center);
         dataLabel.setFontScale(3f);
-        dataLabel.setColor(Color.GOLDENROD);
+        dataLabel.setColor(Color.SALMON);
 
         Label rank1 = new Label("1", skin);
         rank1.setAlignment(Align.center);
         rank1.setFontScale(2.5f);
-        rank1.setColor(Color.GOLD);
+        rank1.setColor(Color.LIGHT_GRAY);
 
         Label rank2 = new Label("2", skin);
         rank2.setAlignment(Align.center);
         rank2.setFontScale(2.5f);
-        rank2.setColor(Color.GOLD);
+        rank2.setColor(Color.LIGHT_GRAY);
 
         Label rank3 = new Label("3", skin);
         rank3.setAlignment(Align.center);
         rank3.setFontScale(2.5f);
-        rank3.setColor(Color.GOLD);
+        rank3.setColor(Color.LIGHT_GRAY);
 
         //have to get the name from name field
         Label player1 = new Label(p1, skin);
@@ -252,23 +259,23 @@ public class MainMenuScreen implements Screen {
         Label score1 = new Label(String.valueOf(highScore1), skin);
         score1.setAlignment(Align.center);
         score1.setFontScale(2.5f);
-        score1.setColor(Color.GOLD);
+        score1.setColor(Color.LIGHT_GRAY);
 
         Label score2 = new Label(String.valueOf(highScore2), skin);
         score2.setAlignment(Align.center);
         score2.setFontScale(2.5f);
-        score2.setColor(Color.GOLD);
+        score2.setColor(Color.LIGHT_GRAY);
 
         Label score3 = new Label(String.valueOf(highScore3), skin);
         score3.setAlignment(Align.center);
         score3.setFontScale(2.5f);
-        score3.setColor(Color.GOLD);
+        score3.setColor(Color.LIGHT_GRAY);
 
         table.row().colspan(3).expandX().fillX();
         table.add(topLabel).expandY();
 
         table.row().colspan(3).fillX();
-        table.add(p1Button).size(350,150).uniform();
+        table.add(button).size(350,150).uniform();
 
 
         table.row().colspan(3).fillX();
@@ -296,14 +303,14 @@ public class MainMenuScreen implements Screen {
 
         stage.addActor(table);
 
-        p1Button.addListener( new ClickListener() {
+        button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new GameScreen(game,player));
                 dispose();
             }
         });
-        p2Button.addListener( new ClickListener() {
+     /*   p2Button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new GameScreen(game,player));
@@ -317,6 +324,8 @@ public class MainMenuScreen implements Screen {
                 dispose();
             }
         });
+
+      */
     }
 
 
