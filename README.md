@@ -1,8 +1,16 @@
-# CS 441 Project 6
+# CS 441 Project 7
 ## <ins>COOKIE MONSTER GAME</ins>
 
 ### <ins>UPDATES</ins>
-Web access functioning added: The highscore of the game is uploaded to the class database online. Also, scores from other games are downloaded from the server to be displayed on the gamescreen. 
+Additions to this game include:
+- Addition of a new screen (class)
+- Ability for user to enter in a player id 
+- Different player ids visible on the leaderboard in order by highest score (limited to 3)
+- New SideMenuScreen added for user to enter in a name
+- MainMenuScreen layout changed to include a single "PLAY" button
+- SideMenuScreen layout changed to include a "RETURN" button to go back to the MainMenuScreen
+- Game levels settings slightly changed
+- Sound effects and visual effects for all screens have been updated
 
 ### <ins>DESCRIPTION:</ins>
 This simple game consists of two screens: Main Menu and Game screens. The game begins with the main menu screen which displays the 'START' button and the accumulated 'HIGH SCORE'. Clicking on the screen will change to the 'Game' screen, which consists of a cookie monster at the bottom of the screen and animated 'Cookie' and 'Bomb' objects falling vertically. The objective of the game is to feed the cookie monster as many cookies as possible while avoiding the bombs.
@@ -28,14 +36,14 @@ Upgrade level every ten points coolected. ***Every three penalties results in ga
 
 ---**Level >5** (pts. 51- ): Only an increased amount of cookies falling vertically at a high speed. 
 
-**STEP 1**: Click the start button to begin:
+**STEP 1**: Click the play button to begin, and view the leaderboard for updated highscores:
 
 ![alt text](screenshots/figure1.png)
 
-**STEP 2**: Control the 'Cookie Monster' object with the keyboard keys: left or right, or by touching the screen to feed it as many cookies as possible. Avoid bombs:
+**STEP 2**: Play game: control the 'Cookie Monster' object with the keyboard keys: left or right, or by touching the screen to feed the cookie monster, and avoid bombs: 
 
 ![alt text](screenshots/figure2.png)
 
-**STEP 3**: View your highest score on the main menu after game over, and play again to beat your score. (Game is over after 3 penalties): 
+**STEP 3**: Enter Player ID: Enter in a name after game is over and click "RETURN" to view updated highscores on the leaderboard, then play again!:
 
 ![alt text](screenshots/figure3.png)
