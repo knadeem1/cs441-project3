@@ -19,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Json;
 
 public class SideMenuScreen implements Screen {
     private final CookieConstruct game;
@@ -36,10 +35,12 @@ public class SideMenuScreen implements Screen {
     private int max3;
     private Skin skin;
     private String player;
+    private int score;
 
-    public SideMenuScreen(final CookieConstruct gm, int score, String pl) {
+    public SideMenuScreen(final CookieConstruct gm, int sc, String pl) {
         game = gm;
         player = pl;
+        score = sc;
 
         show();
     }
@@ -86,7 +87,7 @@ public class SideMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 player = nameText.getText();
-                game.setScreen(new MainMenuScreen(game,0,player));
+                game.setScreen(new MainMenuScreen(game,score,player));
                 dispose();
             }
         });

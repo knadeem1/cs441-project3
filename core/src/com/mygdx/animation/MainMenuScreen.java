@@ -6,12 +6,10 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-//import com.badlogic.gdx.graphics.OrthographicCamera;
-//import com.badlogic.gdx.graphics.Texture;
-//import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.net.HttpRequestBuilder;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -46,6 +44,9 @@ public class MainMenuScreen implements Screen {
             highScore1 = prefs.getInteger("highScore1");
             highScore2 = prefs.getInteger("highScore2");
             highScore3 = prefs.getInteger("highScore3");
+            p1 = prefs.getString("player1");
+            p2 = prefs.getString("player2");
+            p3 = prefs.getString("player3");
         }
         else {
             if (score > highScore3) {
@@ -72,6 +73,13 @@ public class MainMenuScreen implements Screen {
             p2 = prefs.getString("player2");
             p3 = prefs.getString("player3");
         }
+
+        highScore1 = prefs.getInteger("highScore1");
+        highScore2 = prefs.getInteger("highScore2");
+        highScore3 = prefs.getInteger("highScore3");
+        p1 = prefs.getString("player1");
+        p2 = prefs.getString("player2");
+        p3 = prefs.getString("player3");
         /*
         p1 = "";
         p2 = "";
@@ -172,13 +180,15 @@ public class MainMenuScreen implements Screen {
         topLabel.setFontScale(7);
         topLabel.setColor(Color.BLUE);
 
+        Image picture = new Image(this.getAssetManager().get("res/heart.png", Texture.class));
+        picture.
         Label nameLabel = new Label("Name:", skin);
         nameLabel.setFontScale(4);
 
         TextField nameText = new TextField("",skin);
 
 
-        TextButton p1Button = new TextButton("Player1",skin);
+        TextButton p1Button = new TextButton("PLAY!",skin);
         p1Button.getLabel().setFontScale(4.5f);
         p1Button.setColor(Color.YELLOW);
         TextButton p2Button = new TextButton("Player2",skin);
@@ -257,10 +267,9 @@ public class MainMenuScreen implements Screen {
         table.row().colspan(3).expandX().fillX();
         table.add(topLabel).expandY();
 
-        table.row();
+        table.row().colspan(3).fillX();
         table.add(p1Button).size(350,150).uniform();
-        table.add(p2Button).size(350,150).uniform();
-        table.add(p3Button).size(350,150).uniform();
+
 
         table.row().colspan(3).fillX();
         table.add(scoreLabel).expandY().bottom();
